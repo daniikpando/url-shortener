@@ -18,3 +18,17 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Forum: https://elixirforum.com/c/phoenix-forum
   * Source: https://github.com/phoenixframework/phoenix
+
+
+# TODO LIST
+
+- [] Implement multiple hash algorithms like bloom filter, CRC32, MD5, SHA-1, Base62 using bloom filter techique to search efficiently to avoid the hash colissions.
+
+- [] Hash of short url should have only up to 7 characters.
+
+- [] Implement distributed cache to improve the performance of the hash algorithm.
+
+- [] Implement distributed unique ID generator for Base62 hash algorithm generator.
+
+- [] Implement rate limiter techique to improve the security of application.
+
