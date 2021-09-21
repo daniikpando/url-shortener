@@ -18,6 +18,13 @@ defmodule UrlShortenerWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
+
+    live "/urls", UrlLive.Index, :index
+    live "/urls/new", UrlLive.Index, :new
+    live "/urls/:id/edit", UrlLive.Index, :edit
+
+    live "/urls/:id", UrlLive.Show, :show
+    live "/urls/:id/show/edit", UrlLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.
@@ -37,7 +44,7 @@ defmodule UrlShortenerWeb.Router do
 
     scope "/" do
       pipe_through :browser
-      live_dashboard "/dashboard", metrics: UrlShortenerWeb.Telemetry
+      live_dashboard "/dashboard", metrics: UrlShortenerWeb.Telemetry, ecto_repos: [UrlShortener.Repo]
     end
   end
 end

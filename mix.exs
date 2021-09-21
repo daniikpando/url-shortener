@@ -20,7 +20,7 @@ defmodule UrlShortener.MixProject do
   def application do
     [
       mod: {UrlShortener.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :os_mon]
     ]
   end
 
@@ -35,7 +35,7 @@ defmodule UrlShortener.MixProject do
     [
       {:phoenix, "~> 1.5.12"},
       {:phoenix_ecto, "~> 4.4"},
-      {:ecto_sql, "~> 3.4"},
+      {:ecto_sql, "~> 3.7.0"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_live_view, "~> 0.15.1"},
       {:floki, ">= 0.30.0", only: :test},
@@ -46,7 +46,8 @@ defmodule UrlShortener.MixProject do
       {:telemetry_poller, "~> 0.4"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:ecto_psql_extras, "~> 0.6"},
     ]
   end
 
