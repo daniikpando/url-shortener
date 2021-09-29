@@ -7,7 +7,7 @@ defmodule UrlShortener.Base do
   alias UrlShortener.Repo
 
   alias UrlShortener.Base.Url
-
+  alias Ecto.Changeset
   @doc """
   Returns the list of urls.
 
@@ -49,11 +49,7 @@ defmodule UrlShortener.Base do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_url(attrs \\ %{}) do
-    %Url{}
-    |> Url.changeset(attrs)
-    |> Repo.insert()
-  end
+  def create_url(changeset), do: changeset |> Repo.insert()
 
   @doc """
   Updates a url.
@@ -69,7 +65,7 @@ defmodule UrlShortener.Base do
   """
   def update_url(%Url{} = url, attrs) do
     url
-    |> Url.changeset(attrs)
+    |> Url.create_changeset(attrs)
     |> Repo.update()
   end
 
@@ -99,6 +95,30 @@ defmodule UrlShortener.Base do
 
   """
   def change_url(%Url{} = url, attrs \\ %{}) do
-    Url.changeset(url, attrs)
+    Url.validate_changeset(url, attrs)
+    |> case do
+      %Changeset{valid?: true} = changeset -> {:ok, changeset}
+      %Changeset{valid?: false} = changeset -> {:error, changeset}
+    end
+  end
+
+
+  def validate_before_create_url(%Url{} = url, attrs \\ %{}) do
+    Url.create_changeset(url, attrs)
+    |> case do
+      %Changeset{valid?: true} = changeset -> {:ok, changeset}
+      %Changeset{valid?: false} = changeset -> {:error, changeset}
+    end
+  end
+
+
+  @spec get_url_by_long_url(%{:long_url => String.t()}) :: Url.t()
+  def get_url_by_long_url(%{long_url: long_url}) do
+    query =
+      from(u in Url,
+        where: u.long_url == ^long_url
+      )
+
+    Repo.one(query)
   end
 end

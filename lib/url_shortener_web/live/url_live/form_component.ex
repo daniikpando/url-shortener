@@ -1,11 +1,12 @@
 defmodule UrlShortenerWeb.UrlLive.FormComponent do
   use UrlShortenerWeb, :live_component
+  alias UrlShortenerWeb.ServiceLayer.URLService
 
   alias UrlShortener.Base
 
   @impl true
   def update(%{url: url} = assigns, socket) do
-    changeset = Base.change_url(url)
+    {_, changeset} = Base.change_url(url)
 
     {:ok,
      socket
@@ -15,9 +16,12 @@ defmodule UrlShortenerWeb.UrlLive.FormComponent do
 
   @impl true
   def handle_event("validate", %{"url" => url_params}, socket) do
-    changeset =
+    {_, changeset} =
       socket.assigns.url
       |> Base.change_url(url_params)
+
+    changeset =
+      changeset
       |> Map.put(:action, :validate)
 
     {:noreply, assign(socket, :changeset, changeset)}
@@ -41,7 +45,7 @@ defmodule UrlShortenerWeb.UrlLive.FormComponent do
   end
 
   defp save_url(socket, :new, url_params) do
-    case Base.create_url(url_params) do
+    case URLService.create_url(url_params) do
       {:ok, _url} ->
         {:noreply,
          socket
