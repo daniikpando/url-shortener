@@ -13,6 +13,7 @@ defmodule UrlShortener.Application do
       UrlShortenerWeb.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: UrlShortener.PubSub},
+      {UrlShortener.Worker.ExpiredCrontab, %{}},
       # Start the Endpoint (http/https)
       UrlShortenerWeb.Endpoint
       # Start a worker by calling: UrlShortener.Worker.start_link(arg)

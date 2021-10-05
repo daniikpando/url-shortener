@@ -5,7 +5,8 @@ defmodule UrlShortener.Base.Url do
   schema "urls" do
     field :hash, :string
     field :long_url, :string
-
+    field :expired_date, :utc_datetime
+    field :deleted, :boolean, default: false
     timestamps()
   end
 

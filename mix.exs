@@ -48,7 +48,8 @@ defmodule UrlShortener.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:ecto_psql_extras, "~> 0.6"},
-      {:custom_base, "~> 0.2.1"}
+      {:custom_base, "~> 0.2.1"},
+      {:timex, "~> 3.7"},
     ]
   end
 
