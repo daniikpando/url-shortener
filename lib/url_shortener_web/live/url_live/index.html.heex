@@ -1,12 +1,13 @@
 <h1>Listing Urls</h1>
 
 <%= if @live_action in [:new, :edit] do %>
-  <%= live_modal @socket, UrlShortenerWeb.UrlLive.FormComponent,
-    id: @url.id || :new,
-    title: @page_title,
-    action: @live_action,
-    url: @url,
-    return_to: Routes.url_index_path(@socket, :index) %>
+  <.live_component socket={@socket} 
+                   module={UrlShortenerWeb.UrlLive.FormComponent}
+                   id={@url.id || :new}
+                   title={@page_title}
+                   action={@live_action}
+                   url={@url}
+                   return_to={Routes.url_index_path(@socket, :index)} />
 <% end %>
 
 <table>
@@ -20,7 +21,7 @@
   </thead>
   <tbody id="urls">
     <%= for url <- @urls do %>
-      <tr id="url-<%= url.id %>">
+      <tr id={"url-#{url.id}"}>
         <td><%= url.long_url %></td>
         <td><%= url.hash %></td>
 

@@ -1,12 +1,12 @@
 <h1>Show Url</h1>
 
 <%= if @live_action in [:edit] do %>
-  <%= live_modal @socket, UrlShortenerWeb.UrlLive.FormComponent,
-    id: @url.id,
-    title: @page_title,
-    action: @live_action,
-    url: @url,
-    return_to: Routes.url_show_path(@socket, :show, @url) %>
+  <.live_component socket={@socket} module={UrlShortenerWeb.UrlLive.FormComponent}
+                   id={@url.id}
+                   title={@page_title}
+                   action={@live_action}
+                   url={@url}
+                   return_to={Routes.url_show_path(@socket, :show, @url)} />
 <% end %>
 
 <ul>

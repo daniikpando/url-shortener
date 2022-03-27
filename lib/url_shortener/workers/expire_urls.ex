@@ -1,4 +1,4 @@
-defmodule UrlShortener.Worker.ExpiredCrontab do
+defmodule UrlShortener.Worker.ExpireUrls do
   use GenServer
   import Ecto.Query, warn: false
   alias UrlShortener.Repo
@@ -31,7 +31,8 @@ defmodule UrlShortener.Worker.ExpiredCrontab do
   end
 
   defp expire_urls do
-    datetime_now = DateTime.utc_now() |> IO.inspect(label: "************************* algo")
+    datetime_now = DateTime.utc_now()
+
     from(u in Url,
       where:
         fragment("(? AT TIME ZONE 'UTC')::date + interval '1 month'", u.inserted_at) <

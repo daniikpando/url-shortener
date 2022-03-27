@@ -5,7 +5,7 @@ defmodule UrlShortener.MixProject do
     [
       app: :url_shortener,
       version: "0.1.0",
-      elixir: "~> 1.7",
+      elixir: "~> 1.13",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -33,23 +33,23 @@ defmodule UrlShortener.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.5.12"},
-      {:phoenix_ecto, "~> 4.4"},
-      {:ecto_sql, "~> 3.7.0"},
-      {:postgrex, ">= 0.0.0"},
-      {:phoenix_live_view, "~> 0.15.1"},
-      {:floki, ">= 0.30.0", only: :test},
-      {:phoenix_html, "~> 2.11"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_dashboard, "~> 0.4"},
-      {:telemetry_metrics, "~> 0.4"},
-      {:telemetry_poller, "~> 0.4"},
+      {:phoenix, "~> 1.6.0"},
+      {:phoenix_ecto, "~> 4.4.0"},
+      {:phoenix_live_view, "~> 0.17.7"},
+      {:phoenix_live_reload, "~> 1.3.0", only: :dev},
+      {:phoenix_live_dashboard, "~> 0.6.0"},
+      {:phoenix_html, "~> 3.2.0"},
+      {:floki, ">= 0.32.0", only: :test},
+      {:ecto_sql, "~> 3.7.2"},
+      {:ecto_psql_extras, "~> 0.7.4"},
+      {:postgrex, ">= 0.16.2"},
+      {:telemetry_metrics, "~> 0.6.1"},
+      {:telemetry_poller, "~> 1.0.0"},
       {:gettext, "~> 0.11"},
-      {:jason, "~> 1.0"},
+      {:jason, "~> 1.3.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:ecto_psql_extras, "~> 0.6"},
       {:custom_base, "~> 0.2.1"},
-      {:timex, "~> 3.7"},
+      {:timex, "~> 3.7.7"},
     ]
   end
 
