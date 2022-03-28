@@ -28,6 +28,15 @@ config :url_shortener, UrlShortenerWeb.Endpoint,
       "--watch-stdin",
       cd: Path.expand("../assets", __DIR__)
     ]
+  ],
+  live_reload: [
+    interval: 3000,
+    patterns: [
+      ~r"priv/static/url_shortener/.*(js|css|png|jpeg|jpg|gif|svg)$",
+      ~r"priv/gettext/.*(po)$",
+      ~r"lib/url_shortener_web/(live|views)/.*(ex)$",
+      ~r"lib/url_shortener_web/templates/.*(eex)$"
+    ]
   ]
 
 # ## SSL Support
@@ -53,17 +62,6 @@ config :url_shortener, UrlShortenerWeb.Endpoint,
 # If desired, both `http:` and `https:` keys can be
 # configured to run both http and https servers on
 # different ports.
-
-# Watch static and templates for browser reloading.
-config :url_shortener, UrlShortenerWeb.Endpoint,
-  live_reload: [
-    patterns: [
-      ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
-      ~r"priv/gettext/.*(po)$",
-      ~r"lib/url_shortener_web/(live|views)/.*(ex)$",
-      ~r"lib/url_shortener_web/templates/.*(eex)$"
-    ]
-  ]
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"

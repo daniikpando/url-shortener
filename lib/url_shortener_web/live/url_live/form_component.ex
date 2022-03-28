@@ -1,28 +1,20 @@
 defmodule UrlShortenerWeb.UrlLive.FormComponent do
   use UrlShortenerWeb, :live_component
+  import Ecto.Changeset
+  import UrlShortener.Utils.Ecto.ChangesetUtils
+
   alias UrlShortenerWeb.ServiceLayer.URLService
+  alias UrlShortener.Contexts.URLS.URLManager
 
-  alias UrlShortener.Base
-
-  @impl true
-  def update(%{url: url} = assigns, socket) do
-    {_, changeset} = Base.change_url(url)
-
+  def update(%{url: url_schema} = assigns, socket) do
     {:ok,
-     socket
-     |> assign(assigns)
-     |> assign(:changeset, changeset)}
+     assign(socket, Map.put(assigns, :changeset, custom_changeset(%{"url" => url_schema.url})))}
   end
 
-  @impl true
   def handle_event("validate", %{"url" => url_params}, socket) do
-    {_, changeset} =
-      socket.assigns.url
-      |> Base.change_url(url_params)
+    changeset = custom_changeset(url_params)
 
-    changeset =
-      changeset
-      |> Map.put(:action, :validate)
+    changeset = Map.put(changeset, :action, :validate)
 
     {:noreply, assign(socket, :changeset, changeset)}
   end
@@ -32,15 +24,15 @@ defmodule UrlShortenerWeb.UrlLive.FormComponent do
   end
 
   defp save_url(socket, :edit, url_params) do
-    case Base.update_url(socket.assigns.url, url_params) do
+    case URLManager.update(socket.assigns.url, url_params) do
       {:ok, _url} ->
         {:noreply,
          socket
          |> put_flash(:info, "Url updated successfully")
          |> push_redirect(to: socket.assigns.return_to)}
 
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign(socket, :changeset, changeset)}
+      {:error, _} ->
+        {:noreply, put_flash(socket, :error, "Internal server error")}
     end
   end
 
@@ -52,8 +44,21 @@ defmodule UrlShortenerWeb.UrlLive.FormComponent do
          |> put_flash(:info, "Url created successfully")
          |> push_redirect(to: socket.assigns.return_to)}
 
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign(socket, changeset: changeset)}
+      {:error, _} ->
+        {:noreply, put_flash(socket, :error, "Internal server error")}
     end
+  end
+
+  defp custom_changeset(params) do
+    data = %{}
+
+    types = %{
+      url: :string
+    }
+
+    {data, types}
+    |> cast(params, [:url])
+    |> validate_required([:url])
+    |> validate_url(:url)
   end
 end

@@ -10,13 +10,9 @@
         phx_change="validate"
         phx_submit="save">
 
-    <%= label f, :long_url %>
-    <%= text_input f, :long_url %>
-    <%= error_tag f, :long_url %>
-
-    <%= label f, :hash %>
-    <%= text_input f, :hash %>
-    <%= error_tag f, :hash %>
+    <%= label f, :url %>
+    <%= text_input f, :url %>
+    <%= error_tag f, :url %>
 
     <%= submit "Save", phx_disable_with: "Saving..." %>
   </.form>

@@ -5,22 +5,22 @@ defmodule UrlShortenerWeb.UrlLiveTest do
 
   alias UrlShortener.Base
 
-  @create_attrs %{hash: "some hash", long_url: "some long_url"}
-  @update_attrs %{hash: "some updated hash", long_url: "some updated long_url"}
-  @invalid_attrs %{hash: nil, long_url: nil}
+  @create_attrs %{hash: "some hash", url: "some long_url"}
+  @update_attrs %{hash: "some updated hash", url: "some updated long_url"}
+  @invalid_attrs %{hash: nil, url: nil}
 
   defp fixture(:url) do
-    {:ok, url} = Base.create_url(@create_attrs)
+    {:ok, url} = Base.create(@create_attrs)
     url
   end
 
-  defp create_url(_) do
+  defp create(_) do
     url = fixture(:url)
     %{url: url}
   end
 
   describe "Index" do
-    setup [:create_url]
+    setup [:create]
 
     test "lists all urls", %{conn: conn, url: url} do
       {:ok, _index_live, html} = live(conn, Routes.url_index_path(conn, :index))
@@ -82,7 +82,7 @@ defmodule UrlShortenerWeb.UrlLiveTest do
   end
 
   describe "Show" do
-    setup [:create_url]
+    setup [:create]
 
     test "displays url", %{conn: conn, url: url} do
       {:ok, _show_live, html} = live(conn, Routes.url_show_path(conn, :show, url))
